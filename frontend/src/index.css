@@ -1,0 +1,366 @@
+:root {
+  --color-bg: #f5f7fa;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f0f2f6;
+  --color-border: #e0e4ea;
+  --color-text: #1c2333;
+  --color-text-muted: #5b6478;
+  --color-text-faint: #8890a0;
+
+  --color-primary: #3454d1;
+  --color-primary-hover: #2a44ab;
+  --color-danger: #c0392b;
+  --color-danger-bg: #fdecea;
+  --color-success: #1e8a5f;
+
+  /* Family-side palette — validated colorblind-safe categorical set (dataviz
+     skill palette, slots blue/aqua/magenta), used consistently across the
+     tree canvas, badges, and risk charts. The CVD separation between core
+     and maternal sits in the WARN band, so charts always pair color with a
+     visible label/legend rather than relying on color alone. */
+  --side-paternal: #2a78d6;
+  --side-paternal-bg: #e7eefb;
+  --side-paternal-border: #b7cbf3;
+  --side-maternal: #e87ba4;
+  --side-maternal-bg: #fbe8f0;
+  --side-maternal-border: #f0bcd4;
+  --side-core: #1baf7a;
+  --side-core-bg: #e5f6ef;
+  --side-core-border: #b6e4d1;
+  --side-unknown: #6b7280;
+  --side-unknown-bg: #eef0f3;
+  --side-unknown-border: #d6dae1;
+  /* Text-safe darker variants of maternal/core for on-white body text & icons
+     (the validated marks above are for fills/marks, not small text — small
+     text needs its own AA contrast, so badges pair these with dark text,
+     never color-as-the-only-signal). */
+  --side-maternal-ink: #a13866;
+  --side-core-ink: #0f7e58;
+
+  --shadow-sm: 0 1px 2px rgba(20, 24, 40, 0.06), 0 1px 1px rgba(20, 24, 40, 0.04);
+  --shadow-md: 0 6px 16px rgba(20, 24, 40, 0.08), 0 2px 6px rgba(20, 24, 40, 0.06);
+  --shadow-lg: 0 16px 40px rgba(20, 24, 40, 0.16);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+input, select, textarea {
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+a {
+  color: var(--color-primary);
+}
+
+/* ---------- shared building blocks ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: background-color 120ms ease, border-color 120ms ease, transform 80ms ease;
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn-primary {
+  background: var(--color-primary);
+  color: white;
+}
+.btn-primary:hover {
+  background: var(--color-primary-hover);
+}
+.btn-secondary {
+  background: var(--color-surface);
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+.btn-secondary:hover {
+  background: var(--color-surface-alt);
+}
+.btn-danger {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+.btn-danger:hover {
+  background: #f9d9d5;
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--color-text-muted);
+}
+.btn-ghost:hover {
+  background: var(--color-surface-alt);
+}
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.btn-sm {
+  padding: 0.35rem 0.7rem;
+  font-size: 0.8rem;
+}
+.btn-block {
+  width: 100%;
+}
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 0.9rem;
+}
+.field label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+.field input,
+.field select,
+.field textarea {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.65rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+}
+.field-row {
+  display: flex;
+  gap: 0.75rem;
+}
+.field-row > .field {
+  flex: 1;
+}
+.field-hint {
+  font-size: 0.74rem;
+  color: var(--color-text-faint);
+}
+
+.error-banner {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.8rem;
+  font-size: 0.85rem;
+  margin-bottom: 0.9rem;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.badge-paternal {
+  background: var(--side-paternal-bg);
+  color: var(--side-paternal);
+  border: 1px solid var(--side-paternal-border);
+}
+.badge-maternal {
+  background: var(--side-maternal-bg);
+  color: var(--side-maternal-ink);
+  border: 1px solid var(--side-maternal-border);
+}
+.badge-core {
+  background: var(--side-core-bg);
+  color: var(--side-core-ink);
+  border: 1px solid var(--side-core-border);
+}
+.badge-unknown {
+  background: var(--side-unknown-bg);
+  color: var(--side-unknown);
+  border: 1px solid var(--side-unknown-border);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  color: var(--color-text-muted);
+}
+
+.spinner {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.page-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+/* ---------- modal ---------- */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 24, 40, 0.45);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 4vh 1rem;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.modal {
+  width: 100%;
+  max-width: 460px;
+  padding: 1.75rem;
+  box-shadow: var(--shadow-lg);
+}
+
+.modal h2 {
+  font-size: 1.15rem;
+  margin-bottom: 0.25rem;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+}
+
+/* ---------- drawer (side panel) ---------- */
+
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 24, 40, 0.4);
+  z-index: 90;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(440px, 100vw);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-lg);
+  z-index: 95;
+  display: flex;
+  flex-direction: column;
+  animation: slide-in 160ms ease;
+}
+@keyframes slide-in {
+  from { transform: translateX(24px); opacity: 0.4; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.4rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.2rem 1.4rem 2rem;
+}
+
+.drawer-section {
+  margin-bottom: 1.75rem;
+}
+
+.drawer-section h3 {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.tabs {
+  display: flex;
+  gap: 0.25rem;
+  border-bottom: 1px solid var(--color-border);
+  padding: 0 1.4rem;
+}
+.tab {
+  padding: 0.6rem 0.2rem;
+  margin-right: 1.1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  border-bottom: 2px solid transparent;
+  background: none;
+  border-radius: 0;
+}
+.tab.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}

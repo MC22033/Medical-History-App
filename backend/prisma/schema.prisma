@@ -1,0 +1,120 @@
+// FamilyHealth Tree — Prisma schema
+// SQLite for local dev / small deployments. Switch `provider` to "postgresql"
+// and point DATABASE_URL at a Postgres instance to scale this up for real
+// customers later — nothing else in the app needs to change.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String       @id @default(cuid())
+  email        String       @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime     @default(now())
+  memberships  Membership[]
+}
+
+model FamilyTree {
+  id           String       @id @default(cuid())
+  name         String
+  inviteCode   String       @unique
+  corePersonId String?      @unique
+  corePerson   Person?      @relation("CorePerson", fields: [corePersonId], references: [id], onDelete: SetNull)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  memberships  Membership[]
+  people       Person[]     @relation("TreePeople")
+}
+
+model Membership {
+  id             String     @id @default(cuid())
+  userId         String
+  user           User       @relation(fields: [userId], references: [id])
+  familyTreeId   String
+  familyTree     FamilyTree @relation(fields: [familyTreeId], references: [id], onDelete: Cascade)
+  role           String     @default("EDITOR") // OWNER | EDITOR
+  linkedPersonId String?
+  createdAt      DateTime   @default(now())
+
+  @@unique([userId, familyTreeId])
+}
+
+model Person {
+  id           String   @id @default(cuid())
+  familyTreeId String
+  familyTree   FamilyTree @relation("TreePeople", fields: [familyTreeId], references: [id], onDelete: Cascade)
+
+  firstName    String
+  lastName     String?
+  sex          String?  // MALE | FEMALE | UNKNOWN
+  birthDate    String?  // ISO date string; partial dates (e.g. "1954") allowed as free text
+  isDeceased   Boolean  @default(false)
+  deathDate    String?
+  causeOfDeath String?
+  notes        String?
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  conditions        HealthCondition[]
+  parentRelations    Relationship[] @relation("AsParent")
+  childRelations     Relationship[] @relation("AsChild")
+  partnershipsAsA    Partnership[]  @relation("PartnerA")
+  partnershipsAsB    Partnership[]  @relation("PartnerB")
+  coreOfTree         FamilyTree?    @relation("CorePerson")
+
+  @@index([familyTreeId])
+}
+
+// A directed edge: parent -> child. A person normally has up to two of
+// these pointing at them (as child), one per biological/legal parent.
+model Relationship {
+  id       String @id @default(cuid())
+  parentId String
+  parent   Person @relation("AsParent", fields: [parentId], references: [id], onDelete: Cascade)
+  childId  String
+  child    Person @relation("AsChild", fields: [childId], references: [id], onDelete: Cascade)
+
+  @@unique([parentId, childId])
+  @@index([childId])
+  @@index([parentId])
+}
+
+// An undirected spouse/partner edge, stored once with a canonical ordering
+// (personAId < personBId) enforced at the application layer.
+model Partnership {
+  id        String  @id @default(cuid())
+  personAId String
+  personA   Person  @relation("PartnerA", fields: [personAId], references: [id], onDelete: Cascade)
+  personBId String
+  personB   Person  @relation("PartnerB", fields: [personBId], references: [id], onDelete: Cascade)
+  status    String? // MARRIED | PARTNERED | DIVORCED | SEPARATED | WIDOWED
+
+  @@unique([personAId, personBId])
+}
+
+model HealthCondition {
+  id             String   @id @default(cuid())
+  personId       String
+  person         Person   @relation(fields: [personId], references: [id], onDelete: Cascade)
+
+  conditionName  String
+  category       String?  // e.g. Cardiovascular, Cancer, Endocrine/Diabetes, Neurological, Mental Health...
+  ageAtDiagnosis Int?
+  isCauseOfDeath Boolean  @default(false)
+  source         String?  // SELF_REPORTED | DEATH_CERTIFICATE | MEDICAL_RECORD | FAMILY_RECOLLECTION
+  notes          String?
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([personId])
+}

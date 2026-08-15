@@ -1,0 +1,123 @@
+.tree-canvas-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 1.5rem 2rem 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.tree-forest {
+  display: flex;
+  gap: 3.5rem;
+  align-items: flex-start;
+  width: max-content;
+  min-width: 100%;
+  justify-content: center;
+  padding-bottom: 1rem;
+}
+
+.tree,
+.tree ul,
+.tree li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.tree ul {
+  display: flex;
+  position: relative;
+}
+
+/* Nested (child) lists get room + a vertical stub connecting up to the parent unit. */
+.tree li > ul {
+  padding-top: 30px;
+}
+.tree li > ul::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0;
+  height: 30px;
+  border-left: 2px solid var(--color-border);
+}
+
+.tree li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 16px;
+}
+
+/* Horizontal stubs connecting a unit to its siblings, met by the vertical
+   stub from the parent ul above. */
+.tree li::before,
+.tree li::after {
+  content: "";
+  position: absolute;
+  top: -30px;
+  right: 50%;
+  width: 50%;
+  height: 30px;
+  border-top: 2px solid var(--color-border);
+}
+.tree li::after {
+  right: auto;
+  left: 50%;
+  border-left: 2px solid var(--color-border);
+}
+.tree li:only-child::before,
+.tree li:only-child::after {
+  display: none;
+}
+.tree li:first-child::before {
+  border: 0 none;
+}
+.tree li:last-child::after {
+  border: 0 none;
+}
+.tree li:last-child::before {
+  border-right: 2px solid var(--color-border);
+  border-radius: 0 6px 0 0;
+}
+.tree li:first-child::after {
+  border-radius: 6px 0 0 0;
+}
+
+/* The outermost list (one per root/ancestor) shouldn't have a dangling stub above it. */
+.tree > ul.tree-root {
+  padding-top: 0;
+}
+.tree > ul.tree-root > li::before,
+.tree > ul.tree-root > li::after {
+  display: none;
+}
+.tree > ul.tree-root > li {
+  padding-top: 0;
+}
+
+.unit-box {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  position: relative;
+  z-index: 1;
+  padding-top: 4px;
+}
+
+.partner-link {
+  color: var(--color-text-faint);
+  font-size: 1rem;
+}
+
+.tree-legend {
+  display: flex;
+  gap: 0.6rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}

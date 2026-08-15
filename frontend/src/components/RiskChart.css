@@ -1,0 +1,149 @@
+.risk-chart {
+  padding: 1.4rem 1.5rem 1rem;
+}
+
+.risk-chart-legend {
+  display: flex;
+  gap: 1.1rem;
+  margin-bottom: 1.1rem;
+  flex-wrap: wrap;
+}
+
+.risk-chart-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+.risk-chart-legend-item i {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  display: inline-block;
+}
+.risk-chart-legend-item.paternal i { background: var(--side-paternal); }
+.risk-chart-legend-item.maternal i { background: var(--side-maternal); }
+.risk-chart-legend-item.core i { background: var(--side-core); }
+
+.risk-chart-plot {
+  display: flex;
+  gap: 0.75rem;
+  height: 260px;
+}
+
+.risk-chart-yaxis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: var(--color-text-faint);
+  padding-bottom: 34px;
+  text-align: right;
+  width: 22px;
+}
+
+.risk-chart-grid {
+  position: relative;
+  flex: 1;
+  display: flex;
+  padding-bottom: 34px;
+}
+
+.risk-chart-gridline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--color-border);
+  opacity: 0.7;
+}
+
+.risk-chart-groups {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: stretch;
+  gap: 1.5rem;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.risk-chart-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 74px;
+}
+
+.risk-chart-bars {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4px;
+}
+
+.bar-wrap {
+  position: relative;
+  width: 18px;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.bar {
+  width: 100%;
+  min-height: 2px;
+  border-radius: 4px 4px 0 0;
+  transition: filter 100ms ease;
+}
+.bar.paternal { background: var(--side-paternal); }
+.bar.maternal { background: var(--side-maternal); }
+.bar.core { background: var(--side-core); }
+.bar-wrap:hover .bar,
+.bar-wrap:focus .bar {
+  filter: brightness(0.88);
+}
+
+.bar-value {
+  position: absolute;
+  top: -1.15rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.bar-tooltip {
+  position: absolute;
+  bottom: calc(100% + 0.6rem);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-text);
+  color: white;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  padding: 0.4rem 0.55rem;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 100ms ease;
+  z-index: 5;
+  box-shadow: var(--shadow-md);
+}
+.bar-wrap:hover .bar-tooltip,
+.bar-wrap:focus .bar-tooltip {
+  opacity: 1;
+}
+
+.risk-chart-group-label {
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -1,0 +1,108 @@
+.risk-stat-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.risk-stat-tile {
+  padding: 1.1rem 1.25rem;
+}
+
+.risk-stat-tile-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.4rem;
+}
+.risk-stat-tile-label.paternal { color: var(--side-paternal); }
+.risk-stat-tile-label.maternal { color: var(--side-maternal-ink); }
+.risk-stat-tile-label.core { color: var(--side-core-ink); }
+
+.risk-stat-tile-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 0.35rem;
+}
+
+.risk-section-title {
+  font-size: 1.05rem;
+  margin: 1.9rem 0 0.9rem;
+}
+
+.risk-table-wrap {
+  overflow-x: auto;
+  padding: 0.25rem;
+}
+
+.risk-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+}
+.risk-table th,
+.risk-table td {
+  text-align: left;
+  padding: 0.6rem 0.9rem;
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+.risk-table th {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--color-text-muted);
+}
+.risk-table th.paternal, .risk-table td.paternal { color: var(--side-paternal); }
+.risk-table th.maternal, .risk-table td.maternal { color: var(--side-maternal-ink); }
+.risk-table th.core, .risk-table td.core { color: var(--side-core-ink); }
+.risk-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.risk-side-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.risk-side-column {
+  padding: 1.1rem 1.25rem;
+}
+.risk-side-column h3 {
+  font-size: 0.88rem;
+  margin-bottom: 0.75rem;
+}
+.risk-side-column h3.paternal { color: var(--side-paternal); }
+.risk-side-column h3.maternal { color: var(--side-maternal-ink); }
+.risk-side-column h3.core { color: var(--side-core-ink); }
+
+.risk-condition-detail {
+  border-top: 1px solid var(--color-border);
+  padding: 0.55rem 0;
+  font-size: 0.85rem;
+}
+.risk-condition-detail summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.risk-condition-detail ul {
+  margin: 0.5rem 0 0;
+  padding-left: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.risk-cod-tag {
+  margin-left: 0.4rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-danger);
+  background: var(--color-danger-bg);
+  border-radius: 999px;
+  padding: 0.05rem 0.4rem;
+}

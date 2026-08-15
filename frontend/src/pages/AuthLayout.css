@@ -1,0 +1,43 @@
+.auth-page {
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(59, 111, 214, 0.10), transparent 45%),
+    radial-gradient(circle at 85% 80%, rgba(192, 68, 122, 0.10), transparent 45%),
+    var(--color-bg);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 380px;
+  padding: 2rem;
+}
+
+.auth-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 750;
+  font-size: 1.2rem;
+  margin-bottom: 0.3rem;
+}
+
+.auth-subtitle {
+  color: var(--color-text-muted);
+  font-size: 0.88rem;
+  margin-bottom: 1.5rem;
+}
+
+.auth-form {
+  margin-top: 1.25rem;
+}
+
+.auth-footer {
+  margin-top: 1.25rem;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  text-align: center;
+}

@@ -1,0 +1,78 @@
+.shell {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.shell-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.shell-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.shell-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 750;
+  font-size: 1.02rem;
+  color: var(--color-text);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.shell-breadcrumb {
+  color: var(--color-text-muted);
+  font-size: 0.88rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.shell-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.shell-user {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding-left: 0.9rem;
+  border-left: 1px solid var(--color-border);
+}
+
+.shell-user-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.shell-main {
+  flex: 1;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.75rem 1.5rem 3rem;
+}
+
+.shell-title {
+  font-size: 1.5rem;
+  margin-bottom: 1.25rem;
+}

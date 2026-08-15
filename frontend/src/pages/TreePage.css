@@ -1,0 +1,10 @@
+.invite-code-box {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  padding: 0.9rem;
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--color-border);
+}
