@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import AppShell from "../components/AppShell";
 import FamilyTreeCanvas from "../components/FamilyTreeCanvas";
 import PersonEditorDrawer from "../components/PersonEditorDrawer";
+import ImportGedcomModal from "../components/ImportGedcomModal";
 import { api, ApiError } from "../api/client";
 import type { TreeDetail } from "../types";
 import "./TreePage.css";
@@ -14,6 +15,7 @@ export default function TreePage() {
   const [selectedPersonId, setSelectedPersonId] = useState<string | null>(null);
   const [showInvite, setShowInvite] = useState(false);
   const [showAddPerson, setShowAddPerson] = useState(false);
+  const [showImportGedcom, setShowImportGedcom] = useState(false);
 
   function refresh() {
     if (!treeId) return;
@@ -56,6 +58,9 @@ export default function TreePage() {
           <button className="btn btn-secondary btn-sm" onClick={() => setShowInvite(true)}>
             Invite family
           </button>
+          <button className="btn btn-secondary btn-sm" onClick={() => setShowImportGedcom(true)}>
+            Import GEDCOM
+          </button>
           <button className="btn btn-primary btn-sm" onClick={() => setShowAddPerson(true)}>
             + Add person
           </button>
@@ -80,6 +85,14 @@ export default function TreePage() {
       )}
 
       {showInvite && <InviteModal inviteCode={tree.tree.inviteCode} onClose={() => setShowInvite(false)} />}
+
+      {showImportGedcom && (
+        <ImportGedcomModal
+          treeId={treeId}
+          onClose={() => setShowImportGedcom(false)}
+          onImported={setTree}
+        />
+      )}
 
       {showAddPerson && (
         <AddPersonModal

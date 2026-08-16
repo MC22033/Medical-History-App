@@ -1,4 +1,10 @@
-import type { RiskSummary, TreeDetail, TreeSummary } from "../types";
+import type {
+  GedcomImportOutcome,
+  GedcomParseResult,
+  RiskSummary,
+  TreeDetail,
+  TreeSummary,
+} from "../types";
 
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
 
@@ -104,4 +110,15 @@ export const api = {
     }),
   deleteCondition: (treeId: string, conditionId: string) =>
     request<TreeDetail>(`/trees/${treeId}/conditions/${conditionId}`, { method: "DELETE" }),
+
+  previewGedcomImport: (treeId: string, gedcomText: string) =>
+    request<GedcomParseResult>(`/trees/${treeId}/import/gedcom/preview`, {
+      method: "POST",
+      body: JSON.stringify({ gedcomText }),
+    }),
+  commitGedcomImport: (treeId: string, parseResult: GedcomParseResult) =>
+    request<GedcomImportOutcome>(`/trees/${treeId}/import/gedcom/commit`, {
+      method: "POST",
+      body: JSON.stringify(parseResult),
+    }),
 };

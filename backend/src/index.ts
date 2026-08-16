@@ -6,11 +6,15 @@ import { treesRouter } from "./routes/trees";
 import { peopleRouter } from "./routes/people";
 import { relationshipsRouter, partnershipsRouter } from "./routes/relationships";
 import { personConditionsRouter, conditionsRouter } from "./routes/conditions";
+import { gedcomImportRouter } from "./routes/gedcomImport";
 
 const app = express();
 
 app.use(cors({ origin: process.env.CORS_ORIGIN || "*" }));
-app.use(express.json());
+// GEDCOM exports from genealogy sites can run a few MB, well past the 100kb
+// default — everything else in this API sends tiny payloads, so raising the
+// limit globally is low-risk.
+app.use(express.json({ limit: "20mb" }));
 
 app.get("/api/health", (_req, res) => res.json({ ok: true }));
 
@@ -21,6 +25,7 @@ app.use("/api/trees/:treeId/people/:personId/conditions", personConditionsRouter
 app.use("/api/trees/:treeId/conditions", conditionsRouter);
 app.use("/api/trees/:treeId/relationships", relationshipsRouter);
 app.use("/api/trees/:treeId/partnerships", partnershipsRouter);
+app.use("/api/trees/:treeId/import/gedcom", gedcomImportRouter);
 
 // Central error handler — keeps stack traces out of API responses.
 app.use((err: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {

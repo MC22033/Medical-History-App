@@ -21,6 +21,13 @@ common on Dad's side than Mum's side."
   the family (paternal / maternal / core line) each person sits on — purely from
   parent-child edges. `backend/src/lib/risk.ts` uses that to aggregate condition
   frequency by side, which is the headline feature.
+- **GEDCOM import** (`backend/src/lib/gedcomParser.ts`). Most people building a
+  serious family tree already have one in Ancestry/MyHeritage/FamilySearch/Gramps.
+  Rather than making them re-type everyone, a tree's "Import GEDCOM" button parses
+  their export and pre-fills names, sex, birth/death dates, cause of death (GEDCOM's
+  `CAUS` tag), and every parent-child/spouse link — with a preview step before
+  anything is written. GEDCOM has no field for health conditions, so that part stays
+  manual, which is the actual value-add of this app on top of a genealogy export.
 
 ## Repository layout
 
@@ -70,6 +77,7 @@ Demo login after seeding: `demo@example.com` / `password123`.
 ## Product roadmap ideas (not built yet, noted for a future owner)
 
 - Postgres + hosted deploy, billing (Stripe) per family tree, email invites.
-- PDF/GEDCOM export and import.
+- PDF/GEDCOM *export*, and GEDCOM import merge/dedup against existing people
+  (today's import always creates new people — see `backend/src/lib/gedcomParser.ts`).
 - Photo attachments per person.
 - Configurable condition taxonomy / ICD-10 codes for clinical-grade exports.

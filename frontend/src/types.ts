@@ -115,3 +115,39 @@ export interface RiskSummary {
   sides: Record<Side, SideSummary>;
   comparison: ConditionComparisonRow[];
 }
+
+// ---------------- GEDCOM import ----------------
+
+export interface GedcomImportPerson {
+  gedcomId: string;
+  firstName: string;
+  lastName?: string;
+  sex?: Sex;
+  birthDate?: string;
+  isDeceased: boolean;
+  deathDate?: string;
+  causeOfDeath?: string;
+}
+
+export interface GedcomImportRelationship {
+  parentGedcomId: string;
+  childGedcomId: string;
+}
+
+export interface GedcomImportPartnership {
+  aGedcomId: string;
+  bGedcomId: string;
+  status?: string;
+}
+
+export interface GedcomParseResult {
+  people: GedcomImportPerson[];
+  relationships: GedcomImportRelationship[];
+  partnerships: GedcomImportPartnership[];
+  warnings: string[];
+}
+
+export interface GedcomImportOutcome {
+  imported: { people: number; relationships: number; partnerships: number };
+  tree: TreeDetail;
+}

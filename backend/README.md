@@ -40,6 +40,8 @@ All routes except `/api/auth/*` require `Authorization: Bearer <token>`.
 | POST/DELETE | `/api/trees/:treeId/partnerships[/:partnershipId]` | spouse/partner edges |
 | POST | `/api/trees/:treeId/people/:personId/conditions` | add a health condition |
 | PATCH/DELETE | `/api/trees/:treeId/conditions/:conditionId` | edit/remove a condition |
+| POST | `/api/trees/:treeId/import/gedcom/preview` | parse an uploaded GEDCOM file, return what would be imported (writes nothing) |
+| POST | `/api/trees/:treeId/import/gedcom/commit` | actually create the people/relationships/partnerships from a previewed parse result |
 
 The relationship/side/label computation lives in `src/lib/relationship.ts`; the
 risk aggregation lives in `src/lib/risk.ts`. Both are pure functions with no
