@@ -1,22 +1,31 @@
 # Backend — FamilyHealth Tree API
 
-Express + TypeScript + Prisma (SQLite by default).
+Express + TypeScript + Prisma (Postgres).
 
 ## Setup
 
+Needs a Postgres database — a free one from [Neon](https://neon.tech) or
+[Supabase](https://supabase.com) works fine, or a local Postgres if you have
+one. Put its connection string in `DATABASE_URL`.
+
 ```bash
-cp .env.example .env
+cp .env.example .env      # then edit DATABASE_URL to point at your Postgres instance
 npm install
-npm run prisma:migrate   # creates dev.db and applies the schema
-npm run seed              # optional demo data (demo@example.com / password123)
-npm run dev                # http://localhost:4000
+npm run prisma:migrate     # applies the schema
+npm run seed                # optional demo data (demo@example.com / password123)
+npm run dev                  # http://localhost:4000
 ```
+
+For a deployed instance, run `npm run migrate:deploy` (applies pending
+migrations without prompting) as part of your build/release step, rather than
+`prisma:migrate`, which is interactive and meant for local development.
 
 ## Scripts
 
 - `npm run dev` — start with hot reload (tsx watch)
 - `npm run build` / `npm start` — compile to `dist/` and run it
-- `npm run prisma:migrate` — create/apply a migration after editing `prisma/schema.prisma`
+- `npm run prisma:migrate` — create/apply a migration after editing `prisma/schema.prisma` (local dev)
+- `npm run migrate:deploy` — apply pending migrations non-interactively (deployment)
 - `npm run seed` — load the demo family tree
 - `npm run typecheck` — `tsc --noEmit`
 

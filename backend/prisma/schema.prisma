@@ -1,14 +1,14 @@
 // FamilyHealth Tree — Prisma schema
-// SQLite for local dev / small deployments. Switch `provider` to "postgresql"
-// and point DATABASE_URL at a Postgres instance to scale this up for real
-// customers later — nothing else in the app needs to change.
+// Postgres, so a real deployment's data survives restarts/redeploys (a
+// SQLite file on most free hosting doesn't). Point DATABASE_URL at any
+// Postgres instance — e.g. a free Neon or Supabase database.
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 

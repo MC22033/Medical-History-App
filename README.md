@@ -12,9 +12,11 @@ common on Dad's side than Mum's side."
   to many families later without a rewrite.
 - **Multi-user per family.** A tree has an invite code; relatives join with it and
   everyone edits the same shared tree, each attributed to their own account.
-- **Standard, boring, portable stack.** Node/Express + TypeScript + Prisma on the
-  backend (SQLite in dev, one-line switch to Postgres in production), React + Vite +
-  TypeScript on the frontend. No exotic dependencies, easy to hand off or hire for.
+- **Standard, boring, portable stack.** Node/Express + TypeScript + Prisma (Postgres)
+  on the backend, React + Vite + TypeScript on the frontend. No exotic dependencies,
+  easy to hand off or hire for. Postgres from the start (rather than a local SQLite
+  file) because most hosting resets its disk on every deploy/restart — a real
+  deployment needs a database that survives that.
 - **The genealogy + risk logic is the actual product.** `backend/src/lib/relationship.ts`
   computes, relative to whichever person is set as "core": generation, precise
   relationship label (e.g. "Maternal Great-Aunt", "2nd Cousin"), and which side of
@@ -41,11 +43,12 @@ See `backend/README.md` and `frontend/README.md` for how to run each.
 ## Quick start (local dev)
 
 ```bash
-# 1. Backend
+# 1. Backend — needs DATABASE_URL pointing at a Postgres instance (a free
+# Neon or Supabase database works fine) before these commands will connect
 cd backend
 cp .env.example .env
 npm install
-npm run prisma:migrate   # creates dev.db + tables
+npm run prisma:migrate   # applies the schema
 npm run seed              # optional: loads a demo family so you have something to look at
 npm run dev                # http://localhost:4000
 
@@ -74,9 +77,15 @@ Demo login after seeding: `demo@example.com` / `password123`.
   diagnosis, whether it was a/the cause of death, and a source
   (self-reported / death certificate / medical record / family recollection).
 
+## Deploying
+
+See `DEPLOYMENT.md` for a from-scratch guide to a free hosted setup (Neon
+Postgres + Render), including exactly which dashboard fields/env vars to set.
+
 ## Product roadmap ideas (not built yet, noted for a future owner)
 
-- Postgres + hosted deploy, billing (Stripe) per family tree, email invites.
+- Billing (Stripe) per family tree, email invites (invite codes work without
+  it, but email is friendlier), a custom domain.
 - PDF/GEDCOM *export*, and GEDCOM import merge/dedup against existing people
   (today's import always creates new people — see `backend/src/lib/gedcomParser.ts`).
 - Photo attachments per person.
